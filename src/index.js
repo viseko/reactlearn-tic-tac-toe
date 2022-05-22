@@ -23,24 +23,31 @@ class Board extends React.Component {
     ;
   }
 
+  drawSquares() {
+    const rows = [];
+
+    let squareNum = 0;
+    for (let i = 0; i < 3; i++) {
+      const squares = [];
+      
+      for (let j = 0; j < 3; j++) {
+        squares.push(this.renderSquare(squareNum++));
+      }
+
+      rows.push(
+        <div className="board-row">
+          {squares}
+        </div>
+      )
+    }
+
+    return rows;
+  }
+
   render() {
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {this.drawSquares()}
       </div>
     );
   }
@@ -68,6 +75,8 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
+
+    console.log(i);
 
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
@@ -123,8 +132,10 @@ class Game extends React.Component {
             onClick={(i) => this.handleClick(i)}
           />
         </div>
+        <div className="game-status">
+          {status}
+        </div>
         <div className="game-info">
-          <div>{status}</div>
           <ol>{moves}</ol>
         </div>
       </div>

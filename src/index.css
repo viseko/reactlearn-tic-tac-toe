@@ -7,14 +7,29 @@ ol, ul {
   padding-left: 30px;
 }
 
+.game {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 600px;
+  margin: auto;
+  padding-top: 60px;
+}
+
+.game-board {
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.board-row {
+  width: 100%;
+}
+
 .board-row:after {
   clear: both;
   content: "";
   display: table;
-}
-
-.status {
-  margin-bottom: 10px;
 }
 
 .square {
@@ -23,27 +38,31 @@ ol, ul {
   float: left;
   font-size: 24px;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
+  line-height: 50px;
+  height: 50px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 50px;
 }
 
 .square:focus {
   outline: none;
 }
 
+.game-status {
+  position: absolute;
+  top: 0.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+}
+
 .kbd-navigation .square:focus {
   background: #ddd;
 }
 
-.game {
-  display: flex;
-  flex-direction: row;
-}
 
 .game-info {
   margin-left: 20px;
