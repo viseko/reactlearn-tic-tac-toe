@@ -17,6 +17,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
     <Square
+      key={i}
       value={this.props.squares[i]}
       onClick={() => this.props.onClick(i)}
     />)
@@ -35,7 +36,7 @@ class Board extends React.Component {
       }
 
       rows.push(
-        <div className="board-row">
+        <div className="board-row" key={i}>
           {squares}
         </div>
       )
@@ -71,20 +72,32 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history.at(-1);
     const squares = current.squares.slice();
+    const positions = [
+      [1, 1],
+      [1, 2],
+      [1, 3],
+      [2, 1],
+      [2, 2],
+      [2, 3],
+      [3, 1],
+      [3, 2],
+      [3, 3]
+    ];
 
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
 
-    console.log(i);
-
     squares[i] = this.state.xIsNext ? "X" : "O";
+
     this.setState({
       history: history.concat([{
         squares: squares,
+        turn: squares[i],
+        pos: positions[i]
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext
+      xIsNext: !this.state.xIsNext,
     });
   }
 
@@ -101,9 +114,12 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
+      const turn = step.turn;
+      const pos = step.pos;
+
       const desc = move ? 
-        `Перейти к шагу #${move}` :
-        "В начало игры";
+        `${move}) ${turn}:${pos[0]}-${pos[1]}` :
+        "Start";
 
       return (
         <li key={move}>
